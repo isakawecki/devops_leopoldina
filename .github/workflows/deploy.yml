@@ -1,14 +1,11 @@
-
-name: Deploy static content to Pages
+name: CI e Deploy
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
-
 
 permissions:
   contents: read
@@ -20,21 +17,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fazer o git clone
+        uses: actions/checkout@v4
+
+      - name: Executando o primeiro comando
+        run: |
+          ls -l
+          echo "Fim do Processo"
+
+  Deploy:
+    needs: CI
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: '.'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
