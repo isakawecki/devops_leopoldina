@@ -9,7 +9,7 @@ on:
 jobs:
   Mensagem:
     # criar a maquina virtual
-    runs-on: ubunto-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Fazer o git clone
         uses: actions/checkout@v4
