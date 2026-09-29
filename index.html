@@ -3,43 +3,604 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste GitHub</title>
+
+    <title>World Explorer 🌎</title>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-            background: #f4f4f4;
+            background: #f4f7fb;
+            color: #1f2937;
         }
 
-        h1 {
-            color: #333;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: #333;
+        /* HEADER */
+        header {
+            min-height: 650px;
+            background:
+                linear-gradient(rgba(7, 25, 47, 0.72), rgba(7, 25, 47, 0.72)),
+                linear-gradient(135deg, #0f766e, #2563eb, #7c3aed);
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
         }
 
-        button:hover {
-            background: #555;
+        .hero {
+            max-width: 900px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 8vw, 90px);
+            line-height: 0.95;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #67e8f9;
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 35px;
+            color: #e2e8f0;
+        }
+
+        .button {
+            display: inline-block;
+            background: white;
+            color: #172554;
+            padding: 15px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* INTRO */
+        .intro {
+            max-width: 1100px;
+            margin: -70px auto 0;
+            position: relative;
+            background: white;
+            padding: 45px;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(15, 23, 42, 0.12);
+        }
+
+        .intro h2 {
+            font-size: 34px;
+            margin-bottom: 15px;
+            color: #172554;
+        }
+
+        .intro p {
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        /* COUNTRIES */
+        .countries-section {
+            max-width: 1200px;
+            margin: 90px auto;
+            padding: 0 25px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 40px;
+            color: #172554;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 35px;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 600px;
+            padding: 17px 22px;
+            border: 2px solid #dbeafe;
+            border-radius: 50px;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.15);
+        }
+
+        .card-top {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .brazil {
+            background: linear-gradient(135deg, #15803d, #facc15);
+        }
+
+        .japan {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+        }
+
+        .france {
+            background: linear-gradient(135deg, #1d4ed8, #93c5fd);
+        }
+
+        .egypt {
+            background: linear-gradient(135deg, #facc15, #f97316);
+        }
+
+        .australia {
+            background: linear-gradient(135deg, #1e3a8a, #38bdf8);
+        }
+
+        .italy {
+            background: linear-gradient(135deg, #16a34a, #f8fafc);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card h3 {
+            color: #172554;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* CURIOSITIES */
+        .curiosities {
+            background: #172554;
+            color: white;
+            padding: 90px 25px;
+        }
+
+        .curiosities-container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .curiosities h2 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 50px;
+        }
+
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .fact {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+        }
+
+        .fact .icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .fact h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .fact p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* CALL TO ACTION */
+        .cta {
+            text-align: center;
+            padding: 90px 25px;
+            background: #ffffff;
+        }
+
+        .cta h2 {
+            font-size: 38px;
+            color: #172554;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 17px;
+        }
+
+        .cta a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .cta a:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .intro {
+                margin: -50px 15px 0;
+                padding: 30px;
+            }
+
+            .intro h2,
+            .section-title h2,
+            .curiosities h2,
+            .cta h2 {
+                font-size: 30px;
+            }
+
+            header {
+                min-height: 600px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Olá, GitHub! 🚀</h1>
-    <p>Meu primeiro arquivo no GitHub.</p>
+    <header>
+        <div class="hero">
+            <div class="logo">🌎 WORLD EXPLORER</div>
 
-    <button onclick="alert('Funcionou! 🎉')">
-        Clique aqui
-    </button>
+            <h1>
+                Descubra o<br>
+                <span>mundo</span>
+            </h1>
+
+            <p>
+                Explore diferentes países, culturas, paisagens e
+                curiosidades em uma viagem virtual pelo planeta.
+            </p>
+
+            <a href="#paises" class="button">
+                Explorar países ↓
+            </a>
+        </div>
+    </header>
+
+    <section class="intro">
+        <h2>Um mundo de possibilidades</h2>
+
+        <p>
+            O planeta é formado por lugares com histórias, idiomas,
+            comidas, tradições e paisagens completamente diferentes.
+            Conhecer outros países é uma forma de descobrir novas
+            culturas e enxergar o mundo por diferentes perspectivas.
+        </p>
+    </section>
+
+    <section class="countries-section" id="paises">
+
+        <div class="section-title">
+            <h2>🌍 Países em destaque</h2>
+
+            <p>
+                Escolha um destino e descubra um pouco mais sobre ele.
+            </p>
+        </div>
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="search"
+                placeholder="🔎 Pesquise um país..."
+                onkeyup="pesquisarPais()"
+            >
+        </div>
+
+        <div class="cards" id="cards">
+
+            <article class="card">
+                <div class="card-top brazil">
+                    🇧🇷
+                </div>
+
+                <div class="card-content">
+                    <h3>Brasil</h3>
+
+                    <p>
+                        Conhecido pela diversidade cultural,
+                        grandes paisagens naturais e pela mistura
+                        de diferentes influências culturais.
+                    </p>
+
+                    <span class="tag">América do Sul</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-top japan">
+                    🇯🇵
+                </div>
+
+                <div class="card-content">
+                    <h3>Japão</h3>
+
+                    <p>
+                        Um país que combina tradições históricas,
+                        tecnologia, culinária e uma cultura bastante
+                        singular.
+                    </p>
+
+                    <span class="tag">Ásia</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-top france">
+                    🇫🇷
+                </div>
+
+                <div class="card-content">
+                    <h3>França</h3>
+
+                    <p>
+                        Destino conhecido por sua arte, arquitetura,
+                        gastronomia, história e cidades famosas.
+                    </p>
+
+                    <span class="tag">Europa</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-top egypt">
+                    🇪🇬
+                </div>
+
+                <div class="card-content">
+                    <h3>Egito</h3>
+
+                    <p>
+                        Uma região marcada por uma história milenar,
+                        monumentos históricos e a presença do rio Nilo.
+                    </p>
+
+                    <span class="tag">África</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-top australia">
+                    🇦🇺
+                </div>
+
+                <div class="card-content">
+                    <h3>Austrália</h3>
+
+                    <p>
+                        Conhecida por suas praias, grandes áreas
+                        naturais, fauna característica e cidades modernas.
+                    </p>
+
+                    <span class="tag">Oceania</span>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-top italy">
+                    🇮🇹
+                </div>
+
+                <div class="card-content">
+                    <h3>Itália</h3>
+
+                    <p>
+                        Um país com forte patrimônio histórico e cultural,
+                        conhecido também por sua gastronomia e arquitetura.
+                    </p>
+
+                    <span class="tag">Europa</span>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="curiosities">
+
+        <div class="curiosities-container">
+
+            <h2>✨ Você sabia?</h2>
+
+            <div class="facts">
+
+                <div class="fact">
+                    <div class="icon">🗣️</div>
+
+                    <h3>Idiomas</h3>
+
+                    <p>
+                        O mundo possui milhares de idiomas e dialetos,
+                        refletindo a enorme diversidade cultural do planeta.
+                    </p>
+                </div>
+
+                <div class="fact">
+                    <div class="icon">🍜</div>
+
+                    <h3>Gastronomia</h3>
+
+                    <p>
+                        Cada região desenvolveu pratos e ingredientes
+                        associados à sua história e aos seus costumes.
+                    </p>
+                </div>
+
+                <div class="fact">
+                    <div class="icon">🏛️</div>
+
+                    <h3>História</h3>
+
+                    <p>
+                        Diferentes civilizações deixaram monumentos,
+                        cidades e tradições que continuam presentes até hoje.
+                    </p>
+                </div>
+
+                <div class="fact">
+                    <div class="icon">🌄</div>
+
+                    <h3>Paisagens</h3>
+
+                    <p>
+                        Há desertos, florestas, montanhas, ilhas,
+                        geleiras e praias espalhados pelos continentes.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+
+        <h2>O mundo está esperando por você 🌎</h2>
+
+        <p>
+            Conheça novas culturas, descubra novos lugares
+            e continue explorando.
+        </p>
+
+        <a href="#paises">
+            Voltar aos países
+        </a>
+
+    </section>
+
+    <footer>
+        © 2026 World Explorer — Projeto DevOps Bella 🚀
+    </footer>
+
+    <script>
+
+        function pesquisarPais() {
+
+            const input = document
+                .getElementById("search")
+                .value
+                .toLowerCase();
+
+            const cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+
+                const nome = card
+                    .querySelector("h3")
+                    .textContent
+                    .toLowerCase();
+
+                if (nome.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+        }
+
+    </script>
 
 </body>
 </html>
